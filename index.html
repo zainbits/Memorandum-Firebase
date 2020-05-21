@@ -15,11 +15,11 @@
 
     <nav class="black">
         <div class="nav-wrapper">
-            <a style="margin-left: 40px;" href="#"><img src="" alt="LOGO"></a>
-            <ul class="right">
-                <li><a class="modal-trigger" data-target="mod-account" href="#">Profile</a></li>
-                <li><a href="#">Sign Out</a></li>
-                <li><a href="#">Write Memo</a></li>
+            <a href="#" class="brand-logo">LOGO
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a class="modal-trigger" data-target="mod-writememo" href="#">Write Memo</a></li>
+                <li><a class="modal-trigger" data-target="mod-profile" href="#">Profile</a></li>
+                <li><a id="signout" href="#">Sign Out</a></li>
                 <li><a href="#">Sign In</a></li>
                 <li><a href="#">Create Account</a></li>
             </ul>
@@ -28,10 +28,29 @@
 
     <!-- PROFILE MODAL -->
 
-    <div class="modal" id="mod-account">
+    <div class="modal" id="mod-profile">
         <div class="modal-content center-align">
             <h3>Your Profile</h3>
             <div class="account-details"></div>
+        </div>
+    </div>
+
+    <!-- WRITE MEMO MODAL -->
+
+    <div id="mod-writememo" class="modal">
+        <div class="modal-content">
+            <h3>Write Memo</h3><br />
+            <form id="create-form">
+                <div class="input-field">
+                    <input type="text" id="title" required>
+                    <label for="title">Memo Title</label>
+                </div>
+                <div class="input-field">
+                    <textarea id="content" class="materialize-textarea" required></textarea>
+                    <label for="content">Memo Content</label>
+                </div>
+                <button class="black btn">Done</button>
+            </form>
         </div>
     </div>
 
