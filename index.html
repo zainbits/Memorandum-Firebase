@@ -11,13 +11,13 @@
 
 <body>
 
-<!-- Navigation Bar -->
+    <!-- Navigation Bar -->
 
     <nav class="black">
         <div class="nav-wrapper">
-            <a href="#"><img src="" alt="LOGO"></a>
-            <ul>
-                <li><a class="grey-text" href="#">Profile</a></li>
+            <a style="margin-left: 40px;" href="#"><img src="" alt="LOGO"></a>
+            <ul class="right">
+                <li><a class="modal-trigger" data-target="mod-account" href="#">Profile</a></li>
                 <li><a href="#">Sign Out</a></li>
                 <li><a href="#">Write Memo</a></li>
                 <li><a href="#">Sign In</a></li>
@@ -26,10 +26,18 @@
         </div>
     </nav>
 
+    <!-- PROFILE MODAL -->
 
+    <div class="modal" id="mod-account">
+        <div class="modal-content center-align">
+            <h3>Your Profile</h3>
+            <div class="account-details"></div>
+        </div>
+    </div>
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="scripts/main.js"></script>
 </body>
 
 </html>
