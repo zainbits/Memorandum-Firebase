@@ -11,6 +11,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // FIREBASE RELATED JAVASCRIPTS
 
+//LISTEN AUTH STATE
+auth.onAuthStateChanged(user => {
+  if(user) {
+    alert("you are logged in");
+  } else {
+    alert("you have been logged out");
+  }
+})
+
 const createaccountForm = document.querySelector('#createaccount-form');
 createaccountForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -27,4 +36,30 @@ createaccountForm.addEventListener('submit', (e) => {
     createaccountForm.reset();
   })
 
-})
+});
+
+//SIGN-OUT
+const signout = document.querySelector('#signout');
+signout.addEventListener('click', (e) => {
+  e.preventDefault();
+  auth.signOut().then(() => {
+    alert("you have been signed out successfully");
+  })
+});
+
+// SIGN-IN
+const signinForm = document.querySelector('#signin-form');
+signinForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  //GET USER INFO
+  const email = signinForm['signin-email'].value;
+  const pwd = signinForm['signin-pwd'].value;
+
+  auth.signInWithEmailAndPassword(email, pwd).then(tok => {
+    //CLOSE LOGIN MODAL
+    const modal = document.querySelector('#mod-signin');
+    M.Modal.getInstance(modal).close();
+    signinForm.reset();
+  });
+});
