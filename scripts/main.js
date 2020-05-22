@@ -29,11 +29,13 @@ createaccountForm.addEventListener('submit', (e) => {
   const pwd = createaccountForm['create-pwd'].value;
 
   //Create Account
-  auth.createUserWithEmailAndPassword(email, pwd).then(tok => {
+    auth.createUserWithEmailAndPassword(email, pwd).then(tok => {
     console.log(tok.user);
     const modal = document.querySelector('#mod-createaccount');
     M.Modal.getInstance(modal).close();
     createaccountForm.reset();
+  }).catch((err) => {
+    document.getElementById("createaccount-error").innerHTML = err.message;
   })
 
 });
@@ -61,5 +63,7 @@ signinForm.addEventListener('submit', (e) => {
     const modal = document.querySelector('#mod-signin');
     M.Modal.getInstance(modal).close();
     signinForm.reset();
+  }).catch((err) => {
+    document.getElementById("signin-error").innerHTML = err.message;
   });
 });

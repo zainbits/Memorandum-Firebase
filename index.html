@@ -80,10 +80,11 @@
                     <label for="signin-email">Email</label>
                 </div>
                 <div class="input-field">
-                    <input type="text" id="signin-pwd" />
+                    <input type="password" id="signin-pwd" />
                     <label for="signin-pwd">Password</label>
                 </div>
-                <button class="btn black pulse">Sign In</button>
+                <p class="red-text" style="margin-top: 10px;" id="signin-error"></p>
+                <button class="btn black pulse">Sign In</button><br />
             </form>
         </div>
     </div>
@@ -95,13 +96,14 @@
             <h3>Create Account</h3>
             <form id="createaccount-form">
                 <div class="input-field">
-                    <input type="text" id="create-email" />
+                    <input type="text" id="create-email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="please enter a correct email id"/>
                     <label for="create-email">Email</label>
                 </div>
                 <div class="input-field">
-                    <input type="text" id="create-pwd" />
+                    <input type="password" id="create-pwd" pattern=".{6,}" title="at least 6 characters"/>
                     <label for="create-pwd">Password</label>
                 </div>
+                <p class="red-text" style="margin-top: 10px;" id="createaccount-error"></p>
                 <button class="btn pulse">Create Account</button>
             </form>
         </div>
