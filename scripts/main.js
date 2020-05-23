@@ -48,24 +48,6 @@ const setupMemos = (data) => {
     });
     memoList.innerHTML = html;
   } else {
-    // let html = '';
-    const di = `
-    <div class="row">
-            <div class="col s12 m6">
-                <div class="card blue-grey darken-1">
-                    <div class="card-content white-text">
-                        <span class="card-title">Welcome</span>
-                        <p>This is a WebApp Made by Zain Shaikh.
-                        Login or Create Account to start writing you memos.
-                        Memorandum - Never Forget</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `;
-    // html += di;
-    // logoutview.innerHTML = html;
-    memoList.innerHTML = di;
   }
 }
 
@@ -83,6 +65,25 @@ auth.onAuthStateChanged(user => {
   }
 });
 
+// Write Memo
+
+const writeMemo = document.querySelector('#memo-form');
+writeMemo.addEventListener('submit', (e) => {
+  e.preventDefault();
+  db.collection('memos').add({
+    title: writeMemo['title'].value,
+    content: writeMemo['content'].value
+  }).then(() => {
+    const modal = document.querySelector('#mod-writememo');
+      M.Modal.getInstance(modal).close();
+      writeMemo.reset();
+  }).catch(err => {
+    alert(err.message);
+  })
+});
+
+//create account
+
   const createaccountForm = document.querySelector('#createaccount-form');
   createaccountForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -93,7 +94,6 @@ auth.onAuthStateChanged(user => {
 
     //Create Account
     auth.createUserWithEmailAndPassword(email, pwd).then(tok => {
-      console.log(tok.user);
       const modal = document.querySelector('#mod-createaccount');
       M.Modal.getInstance(modal).close();
       createaccountForm.reset();
