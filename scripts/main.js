@@ -1,6 +1,9 @@
 // PAGE RELATED JAVASCRIPTS
 
 document.addEventListener('DOMContentLoaded', function () {
+  var elems = document.querySelectorAll('.sidenav');
+  M.Sidenav.init(elems);
+
   var modals = document.querySelectorAll('.modal');
   M.Modal.init(modals);
 
@@ -11,12 +14,38 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // FIREBASE RELATED JAVASCRIPTS
 
+
+
+const memoList = document.querySelector('.memos');
+
+const setupMemos = (data) => {
+  if(data.length){
+  let html = '';
+  data.forEach(doc => {
+    const memo = doc.data();
+    const li = `
+      <li>
+        <div class="collapsible-header grey white-text">${memo.title}</div>
+        <div class="collapsible-body white">${memo.content}</div>
+      </li>
+  `;
+    html += li
+  });
+  memoList.innerHTML = html;
+  } else {
+    memoList.innerHTML = '<h3>Login</h3>'
+  }
+}
+
 //LISTEN AUTH STATE
 auth.onAuthStateChanged(user => {
-  if(user) {
-    alert("you are logged in");
+  if (user) {
+    //GET DATA
+    db.collection('memos').get().then(snapshot => {
+      setupMemos(snapshot.docs);
+    });
   } else {
-    alert("you have been logged out");
+    setupMemos([]);
   }
 })
 
@@ -29,7 +58,7 @@ createaccountForm.addEventListener('submit', (e) => {
   const pwd = createaccountForm['create-pwd'].value;
 
   //Create Account
-    auth.createUserWithEmailAndPassword(email, pwd).then(tok => {
+  auth.createUserWithEmailAndPassword(email, pwd).then(tok => {
     console.log(tok.user);
     const modal = document.querySelector('#mod-createaccount');
     M.Modal.getInstance(modal).close();
