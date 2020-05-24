@@ -55,7 +55,7 @@ const setupMemos = (data) => {
 auth.onAuthStateChanged(user => {
   if (user) {
     //GET DATA
-    db.collection('memos').get().then(snapshot => {
+    db.collection('memos').onSnapshot(snapshot => {
       setupMemos(snapshot.docs);
       authUI(user);
     });
