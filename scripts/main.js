@@ -25,6 +25,21 @@ const authUI = (user) => {
     //TOGGLE UI customElements
     signinLinks.forEach(item => item.style.display = 'block');
     signoutLinks.forEach(item => item.style.display = 'none');
+
+    const writeMemo = document.querySelector('#memo-form');
+writeMemo.addEventListener('submit', (e) => {
+  e.preventDefault();
+  db.collection(user.email).add({
+    title: writeMemo['title'].value,
+    content: writeMemo['content'].value
+  }).then(() => {
+    const modal = document.querySelector('#mod-writememo');
+      M.Modal.getInstance(modal).close();
+      writeMemo.reset();
+  }).catch(err => {
+    alert(err.message);
+  })
+});
   }
   else {
     //TOGGLE UI customElements
@@ -55,7 +70,7 @@ const setupMemos = (data) => {
 auth.onAuthStateChanged(user => {
   if (user) {
     //GET DATA
-    db.collection('memos').onSnapshot(snapshot => {
+    db.collection(user.email).onSnapshot(snapshot => {
       setupMemos(snapshot.docs);
       authUI(user);
     });
@@ -65,22 +80,6 @@ auth.onAuthStateChanged(user => {
   }
 });
 
-// Write Memo
-
-const writeMemo = document.querySelector('#memo-form');
-writeMemo.addEventListener('submit', (e) => {
-  e.preventDefault();
-  db.collection('memos').add({
-    title: writeMemo['title'].value,
-    content: writeMemo['content'].value
-  }).then(() => {
-    const modal = document.querySelector('#mod-writememo');
-      M.Modal.getInstance(modal).close();
-      writeMemo.reset();
-  }).catch(err => {
-    alert(err.message);
-  })
-});
 
 //create account
 
@@ -94,6 +93,9 @@ writeMemo.addEventListener('submit', (e) => {
 
     //Create Account
     auth.createUserWithEmailAndPassword(email, pwd).then(tok => {
+      return db.collection(tok.user.email);
+    }).then(() => {
+
       const modal = document.querySelector('#mod-createaccount');
       M.Modal.getInstance(modal).close();
       createaccountForm.reset();
